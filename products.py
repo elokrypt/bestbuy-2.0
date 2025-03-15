@@ -1,7 +1,7 @@
 #  -*- coding: utf-8 -*-
 #  @filename products.py
 #  @author Marcel Bobolz
-#  @last_modified 2025-03-14T21:57:28.629Z
+#  @last_modified 2025-03-15T04:35:04.308Z
 """
 Implementation of OutOfStockError and Product-class.
 """
@@ -108,17 +108,4 @@ class Product:
         return float(quantity) * self._price
 
 
-if __name__ == "__main__":
-    bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
-    mac = Product("MacBook Air M2", price=1450, quantity=100)
-
-    print(bose.buy(50))
-    print(mac.buy(100))
-    print(mac.is_active())
-
-    print(bose.show())
-    print(bose.active)
-
-    bose.set_quantity(0)
-    print(bose.show())
-    print(bose.active)
+# - eof -

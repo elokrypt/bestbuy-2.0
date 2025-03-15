@@ -1,7 +1,7 @@
 #  -*- coding: utf-8 -*-
 #  @filename store.py
 #  @author Marcel Bobolz
-#  @last_modified 2025-03-14T22:00:01.128Z
+#  @last_modified 2025-03-15T04:34:55.485Z
 """
 Implements the Store class.
 """
@@ -73,15 +73,4 @@ class Store:
         return total_price
 
 
-if __name__ == "__main__":
-    product_list = [
-        Product("MacBook Air M2", price=1450, quantity=100),
-        Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-        Product("Google Pixel 7", price=500, quantity=250),
-    ]
-
-    best_buy = Store(product_list)
-    _products = best_buy.get_all_products()
-    print(best_buy.get_total_quantity())
-    print(best_buy.order([(_products[0], 1), (_products[1], 2)]))
-    best_buy.remove_product(_products[2])
+# - eof -
