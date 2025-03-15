@@ -1,14 +1,15 @@
 #  -*- coding: utf-8 -*-
 #  @filename main.py
 #  @author Marcel Bobolz
-#  @last_modified 2025-03-14T23:40:51.028Z
+#  @last_modified 2025-03-15T08:06:07.177Z
 """
 Implements the Best Buy - Store CLI.
 """
 
 from typing import List, Tuple
 
-from products import Product, OutOfStockError
+from products import OutOfStockValueError, MaximumValueError
+from products import Product, NonStockedProduct, LimitedProduct
 from store import Store, ProductOrder
 
 STORE_MENU = """
@@ -41,6 +42,7 @@ def start(store: Store):
     do_quit = False
     while not do_quit:
         products: List[Product] = store.get_all_products()
+        products_len: int = len(products)
         try:
             choice = int(input(STORE_MENU))
         except ValueError:
@@ -64,18 +66,28 @@ def start(store: Store):
                         break
                     try:
                         prod_index = int(prod_num) - 1
+                        if prod_index >= products_len or prod_index < 0:
+                            raise IndexError
                         prod_qty = int(prod_qty)
+                        if prod_qty <= 0:
+                            raise ValueError
                         order = (products[prod_index], prod_qty)
                         shopping_list.append(order)
                         print("\nProduct added to list!\n")
+                    except IndexError:
+                        print("\n- Product-Index # out of bounds ! - \n")
                     except ValueError:
                         print("\n- Error adding product ! -\n")
                 if len(shopping_list) > 0:
                     try:
                         total_price = store.order(shopping_list)
                         print(f"********\nOrder made! Total payment ${total_price:.2f}")
-                    except OutOfStockError:
-                        print("Error while making order! Quantity larger than what exists.")
+                    except OutOfStockValueError as e:
+                        print(f"Error:\n\t{e.message}")
+                    except MaximumValueError as e:
+                        print(f"Error:\n\t{e.message}")
+                    except ValueError as e:
+                        print(f"Error:\n\t{e.message}")
             case 4:
                 do_quit = True
         continue
@@ -90,6 +102,8 @@ def main():
         Product("MacBook Air M2", price=1450, quantity=100),
         Product("Bose QuietComfort Earbuds", price=250, quantity=500),
         Product("Google Pixel 7", price=500, quantity=250),
+        NonStockedProduct("Windows License", price=125),
+        LimitedProduct("Shipping", price=10, quantity=250, maximum=1),
     ]
     best_buy = Store(product_list)
     try:

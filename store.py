@@ -1,7 +1,7 @@
 #  -*- coding: utf-8 -*-
 #  @filename store.py
 #  @author Marcel Bobolz
-#  @last_modified 2025-03-15T04:34:55.485Z
+#  @last_modified 2025-03-15T07:32:44.772Z
 """
 Implements the Store class.
 """
@@ -57,11 +57,11 @@ class Store:
         """
         Returns all products in the store that are active.
         """
-        products_: List[Product] = []
+        products: List[Product] = []
         for product in self._products:
             if product.is_active():
-                products_.append(product)
-        return products_
+                products.append(product)
+        return products
 
     def order(self, shopping_list: List[ProductOrder]) -> float:
         """
