@@ -1,7 +1,7 @@
 #  -*- coding: utf-8 -*-
 #  @filename store.py
 #  @author Marcel Bobolz
-#  @last_modified 2025-03-15T07:32:44.772Z
+#  @last_modified 2025-03-15T12:38:22.585Z
 """
 Implements the Store class.
 """
@@ -21,7 +21,9 @@ class Store:
     def __init__(self, products: Optional[List[Product]]):
         for product in products:
             if not isinstance(product, Product):
-                raise ValueError("Can only add 'Product'(s) to the store.")
+                raise ValueError(
+                    "'product' is not an instance of List[Product]"
+                )
         self._products = products
 
     def add_product(self, product: Product):
@@ -29,7 +31,7 @@ class Store:
         Adds a Product to the store.
         """
         if not isinstance(product, Product):
-            raise ValueError("Can only add a Product to the store.")
+            raise ValueError("'product' is not an instance of Product(..)")
         self._products.append(product)
 
     def remove_product(self, product: Product):
@@ -37,7 +39,7 @@ class Store:
         Removes a Product from the store.
         """
         if not isinstance(product, Product):
-            raise ValueError("Can only remove a Product from the store.")
+            raise ValueError("'product' is not an instance of Product(..)")
         index = 0
         for _product in self._products:
             if _product.name == product.name:
@@ -65,7 +67,9 @@ class Store:
 
     def order(self, shopping_list: List[ProductOrder]) -> float:
         """
-        Buys the products and returns the total price of the order.(float)
+        Buys the product(s) with given quantity, and accumulates
+        the total price of the order.
+        Returns the total price as float.
         """
         total_price: float = 0.00
         for product_order in shopping_list:

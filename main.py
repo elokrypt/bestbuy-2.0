@@ -1,7 +1,7 @@
 #  -*- coding: utf-8 -*-
 #  @filename main.py
 #  @author Marcel Bobolz
-#  @last_modified 2025-03-15T08:06:07.177Z
+#  @last_modified 2025-03-15T12:34:24.817Z
 """
 Implements the Best Buy - Store CLI.
 """
@@ -10,6 +10,7 @@ from typing import List, Tuple
 
 from products import OutOfStockValueError, MaximumValueError
 from products import Product, NonStockedProduct, LimitedProduct
+from promotions import PercentDiscount, SecondHalfPrice, ThirdOneFree
 from store import Store, ProductOrder
 
 STORE_MENU = """
@@ -51,7 +52,9 @@ def start(store: Store):
             case 1:
                 show_all_products(products)
             case 2:
-                print(f"\nTotal of {store.get_total_quantity()} items in store\n")
+                print(
+                    f"\nTotal of {store.get_total_quantity()} items in store\n"
+                )
             case 3:
                 prod_num: str | int
                 prod_qty: str | int
@@ -81,7 +84,10 @@ def start(store: Store):
                 if len(shopping_list) > 0:
                     try:
                         total_price = store.order(shopping_list)
-                        print(f"********\nOrder made! Total payment ${total_price:.2f}")
+                        print(
+                            f"********\n"
+                            f"Order made! Total payment ${total_price:.2f}"
+                        )
                     except OutOfStockValueError as e:
                         print(f"Error:\n\t{e.message}")
                     except MaximumValueError as e:
@@ -105,6 +111,17 @@ def main():
         NonStockedProduct("Windows License", price=125),
         LimitedProduct("Shipping", price=10, quantity=250, maximum=1),
     ]
+
+    # Create promotion catalog
+    second_half_price = SecondHalfPrice("Second Half price!")
+    third_one_free = ThirdOneFree("Third One Free!")
+    thirty_percent = PercentDiscount("30% Off!", percent=30)
+
+    # Add promotions to products
+    product_list[0].set_promotion(second_half_price)
+    product_list[1].set_promotion(third_one_free)
+    product_list[3].set_promotion(thirty_percent)
+
     best_buy = Store(product_list)
     try:
         start(best_buy)
@@ -114,3 +131,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# - eof -
