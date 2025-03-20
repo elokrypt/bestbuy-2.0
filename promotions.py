@@ -47,8 +47,9 @@ class SecondHalfPrice(Promotion):
         """
         half_qty: int = quantity - int(quantity // 2)
         half_price: float = product.price / 2
-        total_price: float = half_qty * half_price
-        +(half_qty * product.price)
+        total_price: float = (half_qty * half_price) + (
+            half_qty * product.price
+        )
         return total_price
 
 

@@ -8,6 +8,7 @@ Implements the Store class.
 
 from typing import Optional, List, Tuple
 from products import Product
+from products import OutOfStockValueError, MaximumValueError
 
 ProductOrder = Tuple[Product, int]
 
@@ -73,7 +74,12 @@ class Store:
         """
         total_price: float = 0.00
         for product_order in shopping_list:
-            total_price += product_order[0].buy(product_order[-1])
+            try:
+                total_price += product_order[0].buy(product_order[-1])
+            except OutOfStockValueError as e:
+                print(f"Error:\n\t{e.message}")
+            except MaximumValueError as e:
+                print(f"Error:\n\t{e.message}")
         return total_price
 
 

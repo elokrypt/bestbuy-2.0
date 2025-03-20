@@ -1,14 +1,12 @@
 #  -*- coding: utf-8 -*-
 #  @filename main.py
 #  @author Marcel Bobolz
-#  @last_modified 2025-03-15T12:34:24.817Z
 """
 Implements the Best Buy - Store CLI.
 """
 
 from typing import List, Tuple
 
-from products import OutOfStockValueError, MaximumValueError
 from products import Product, NonStockedProduct, LimitedProduct
 from promotions import PercentDiscount, SecondHalfPrice, ThirdOneFree
 from store import Store, ProductOrder
@@ -88,10 +86,6 @@ def start(store: Store):
                             f"********\n"
                             f"Order made! Total payment ${total_price:.2f}"
                         )
-                    except OutOfStockValueError as e:
-                        print(f"Error:\n\t{e.message}")
-                    except MaximumValueError as e:
-                        print(f"Error:\n\t{e.message}")
                     except ValueError as e:
                         print(f"Error:\n\t{e.message}")
             case 4:
