@@ -44,7 +44,7 @@ class Store:
         index = 0
         for _product in self._products:
             if _product.name == product.name:
-                del self._products[index]
+                self._products.pop(index)
             index += 1
 
     def get_total_quantity(self) -> int:

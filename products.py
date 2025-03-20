@@ -90,11 +90,11 @@ class Product(BaseProduct):
         return self._price
 
     @property
-    def quantity(self) -> int:
+    def quantity(self) -> float:
         """
         Getter for product-quantity.
         """
-        return self._quantity
+        return float(self._quantity)
 
     @quantity.setter
     def quantity(self, quantity: int):
@@ -199,11 +199,11 @@ class NonStockedProduct(Product):
         self._quantity = 0
 
     @property
-    def quantity(self) -> int:
+    def quantity(self) -> float:
         """
         Getter for quantity (=0 -> see class description)
         """
-        return self._quantity
+        return float(self._quantity)
 
     @quantity.setter
     def quantity(self, quantity: int):

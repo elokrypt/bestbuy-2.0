@@ -45,7 +45,7 @@ def test_buy_modifies_quantity():
     # purchase 2x item from product, expect price of 2 * 150.00
     assert product.buy(2) == 300.00
     # check quantity via getter
-    assert product.quantity
+    assert product.quantity == 3
 
 
 def test_buy_too_much():
