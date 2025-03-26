@@ -34,7 +34,7 @@ class OutOfStockValueError(Exception):
 
 class BaseProduct(ABC):
     @abstractmethod
-    def show(self) -> str:
+    def __str__(self) -> str:
         """
         Returns a string that represents the product.
         """
@@ -74,6 +74,30 @@ class Product(BaseProduct):
             raise ValueError("argument 'quantity' is negative.")
         self.quantity = int(quantity)
         self.promotion = None
+
+    def __str__(self) -> str:
+        """
+        Returns a string that represents the product.
+        """
+        return (
+            f"'{self.name}', Price: ${self.price:.2f}, "
+            f"Quantity: {self.quantity}, "
+            f"Promotion: {self.promotion}"
+        )
+
+    def __gt__(self, other_prod) -> bool:
+        """
+        Checks if own product price is greater than of another product.
+        """
+        if isinstance(other_prod, Product):
+            return self.price > other_prod.price
+
+    def __lt__(self, other_prod) -> bool:
+        """
+        Checks if own product price is lower than of another product.
+        """
+        if isinstance(other_prod, Product):
+            return self.price < other_prod.price
 
     @property
     def name(self) -> str:
@@ -154,16 +178,6 @@ class Product(BaseProduct):
         """
         self._active = False
 
-    def show(self) -> str:
-        """
-        Returns a string that represents the product.
-        """
-        return (
-            f"'{self.name}', Price: ${self.price:.2f}, "
-            f"Quantity: {self.quantity}, "
-            f"Promotion: {self.promotion}"
-        )
-
     def buy(self, quantity: int) -> float:
         """
         Checks the quantity, if inside available boundaries.
@@ -212,7 +226,7 @@ class NonStockedProduct(Product):
         """
         pass
 
-    def show(self) -> str:
+    def __str__(self) -> str:
         """
         Returns a string that represents the product.
         """
@@ -264,7 +278,7 @@ class LimitedProduct(Product):
         """
         return self._maximum
 
-    def show(self) -> str:
+    def __str__(self) -> str:
         """
         Returns a string that represents the product.
         """

@@ -29,7 +29,7 @@ def show_all_products(products: List[Product]):
     print("\n-----")
     for product in products:
         lino += 1
-        print(f"{lino}. {product.show()}")
+        print(f"{lino}. {product}")
     print("""-----
     """)
 
@@ -123,7 +123,37 @@ def main():
         print("\nCTRL-C catched -> Exiting...")
 
 
+""" def test_store_operators():
+    prod_list_1 = [
+        Product("MacBook Air M2", price=1450, quantity=100),
+        Product("Bose QuietComfort Earbuds", price=250, quantity=500),
+        Product("Google Pixel 7", price=500, quantity=250),
+    ]
+
+    prod_list_2 = [
+        NonStockedProduct("Windows License", price=125),
+        LimitedProduct("Shipping", price=10, quantity=250, maximum=1),
+    ]
+
+    print("Testing '<' operator (should return True)")
+    print(f"Result: {prod_list_1[1] < prod_list_1[2]}")
+
+    print("Testing '>' operator (should return True)")
+    print(f"Result: {prod_list_1[2] > prod_list_1[1]}")
+
+    store_a = Store(prod_list_1)
+    store_b = Store(prod_list_2)
+
+    print("Testing 'in' operator (should return True)")
+    print(f"Result: {prod_list_1[1] in store_a}")
+
+    best_buy = store_a + store_b
+
+    start(best_buy) """
+
+
 if __name__ == "__main__":
+    # test_store_operators()
     main()
 
 # - eof -

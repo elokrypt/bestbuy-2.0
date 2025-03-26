@@ -27,6 +27,39 @@ class Store:
                 )
         self._products = products
 
+    def __add__(self, other_store) -> object:
+        """
+        Creates a new instance of Store by accumulating all additional
+        products in the second Store instance to the first named store
+        instance.
+        Raises an exception if there are duplicate products in one
+        of the other store instances.
+        """
+        new_store: Store = Store(self._products)
+        for other_product in other_store.products:
+            if other_product not in new_store:
+                new_store.add_product(other_product)
+            else:
+                raise ValueError(
+                    f"The product '{other_product}' already exists."
+                )
+        return new_store
+
+    def __contains__(self, product) -> bool:
+        """
+        Checks if a product is available in the store. (name-check)
+        """
+        for prod in self._products:
+            if prod.name == product.name:
+                return True
+
+    @property
+    def products(self):
+        """
+        Returns all products in the store, even the inactive ones.
+        """
+        return self._products
+
     def add_product(self, product: Product):
         """
         Adds a Product to the store.
