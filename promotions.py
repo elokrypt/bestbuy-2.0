@@ -45,11 +45,13 @@ class SecondHalfPrice(Promotion):
         Apply the 'half-price' discount onto 'quantity' of 'product'.
         Returns the final price as float.
         """
-        half_qty: int = quantity - int(quantity // 2)
+        total_price: float = 0.0
         half_price: float = product.price / 2
-        total_price: float = (half_qty * half_price) + (
-            half_qty * product.price
-        )
+        for counter in range(0, quantity):
+            if counter % 2 == 1:
+                total_price += half_price
+            else:
+                total_price += product.price
         return total_price
 
 
@@ -88,8 +90,7 @@ class PercentDiscount(Promotion):
         Apply the 'percent' discount onto 'quantity' of 'product'.
         Returns the final price as float.
         """
-        discount_price = product.price
-        -(product.price * (self.percent * 0.01))
+        discount_price = product.price - (product.price * (self.percent * 0.01))
         return discount_price * quantity
 
 
